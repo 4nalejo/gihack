@@ -1,0 +1,87 @@
+#!/bin/bash
+
+echo -e "\e[32m
+      ___                       ___           ___           ___           ___     
+     /  /\        ___          /__/\         /  /\         /  /\         /__/|    
+    /  /:/_      /  /\         \  \:\       /  /::\       /  /:/        |  |:|    
+   /  /:/ /\    /  /:/          \__\:\     /  /:/\:\     /  /:/         |  |:|    
+  /  /:/_/::\  /__/::\      ___ /  /::\   /  /:/~/::\   /  /:/  ___   __|  |:|    
+ /__/:/__\/\:\ \__\/\:\__  /__/\  /:/\:\ /__/:/ /:/\:\ /__/:/  /  /\ /__/\_|:|____
+ \  \:\ /~~/:/    \  \:\/\ \  \:\/:/__\/ \  \:\/:/__\/ \  \:\ /  /:/ \  \:\/:::::/
+  \  \:\  /:/      \__\::/  \  \::/       \  \::/       \  \:\  /:/   \  \::/~~~~ 
+   \  \:\/:/       /__/:/    \  \:\        \  \:\        \  \:\/:/     \  \:\     
+    \  \::/        \__\/      \  \:\        \  \:\        \  \::/       \  \:\    
+     \__\/                     \__\/         \__\/         \__\/         \__\/    
+\e[0m"
+while :;
+do
+echo -n "connect or entry: "
+read ce
+if [[ $ce == "connect" ]]
+then
+echo -n "name account: "
+read nameAccount
+echo -n "page: "
+read page
+echo -en "\e[2m\e[32m"
+git clone https://github.com/$nameAccount/$page  
+echo -en "\e[0m"
+cd $page
+echo -e "\e[32mRemote $page\e[0m"
+while :;
+do
+echo -n "shell: "
+read shell
+if [[ $shell == "next" ]]
+then
+echo -n "add: "
+read add
+git add $add
+echo -en "\e[32m"
+git status | grep "modified"
+echo -en "\e[0m"
+echo -n "name: "
+read name
+git commit -m "$name" > /dev/null 2>&1
+echo -n "finish (account) enter"
+read
+git push
+rm -rfd $page
+else
+echo -e "command \e[2m$shell\e[0m output: \e[32m\n$($shell)\e[0m"
+fi
+done
+elif [[ $ce == "entry" ]]
+then
+echo -n "page: "
+read page
+cd $page
+while :;
+do
+echo -n "shell: "
+read shell
+if [[ $shell == "next" ]]
+then
+echo -n "add: "
+read add
+git add $add
+echo -en "\e[32m"
+git status | grep "modified"
+echo -en "\e[0m"
+echo -n "name: "
+read name
+git commit -m "$name" > /dev/null 2>&1
+echo -n "finish (account) enter"
+read
+git push
+cd ..
+rm -rfd $page
+exit
+else
+echo -e "command \e[2m$shell\e[0m output: \e[32m\n$($shell)\e[0m"
+fi
+done
+else
+echo -n ""
+fi
+done
