@@ -46,7 +46,7 @@ git commit -m "$name" > /dev/null 2>&1
 echo -n "finish (account) enter"
 read
 git push
-rm -rfd $page
+exit
 else
 echo -e "command \e[2m$shell\e[0m output: \e[32m\n$($shell)\e[0m"
 fi
